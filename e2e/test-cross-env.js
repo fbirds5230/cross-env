@@ -124,6 +124,24 @@ async function runTests() {
 			},
 		},
 		{
+			name: 'Empty command arguments',
+			test: async () => {
+				const expected = ['', 'middle', '', 'last', '']
+				const result = await runCommand(crossEnvPath, [
+					'node',
+					'-e',
+					'console.log(JSON.stringify(process.argv.slice(1)))',
+					'--',
+					...expected,
+				])
+				if (result.stdout.trim() !== JSON.stringify(expected)) {
+					throw new Error(
+						`Expected ${JSON.stringify(expected)}, got ${result.stdout.trim()}`,
+					)
+				}
+			},
+		},
+		{
 			name: 'Command with arguments',
 			test: async () => {
 				const result = await runCommand(crossEnvPath, [

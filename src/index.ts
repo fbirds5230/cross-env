@@ -101,7 +101,7 @@ function parseCommand(
 				throw new Error('Command is required')
 			}
 			command = parsedCommand
-			commandArgs = cStart.slice(1).filter(Boolean)
+			commandArgs = cStart.slice(1)
 			break
 		}
 	}

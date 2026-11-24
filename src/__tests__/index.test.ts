@@ -77,6 +77,18 @@ describe('crossEnv', () => {
 		testEnvSetting({ FOO_ENV: '' }, 'FOO_ENV=')
 	})
 
+	test('preserves empty command arguments', () => {
+		crossEnv(['FOO=bar', 'echo', '', 'middle', "''", 'last', ''])
+		expect(crossSpawnMock.spawn).toHaveBeenCalledTimes(1)
+		expect(vi.mocked(crossSpawnMock.spawn).mock.calls[0]?.[1]).toEqual([
+			'',
+			'middle',
+			'',
+			'last',
+			'',
+		])
+	})
+
 	test('handles quoted scripts', () => {
 		crossEnv(['GREETING=Hi', 'NAME=Joe', 'echo $GREETING && echo $NAME'], {
 			shell: true,
